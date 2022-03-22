@@ -1,10 +1,10 @@
+require('dotenv').config();
 const puppeteer = require("puppeteer");
 const qrcode = require("qrcode-terminal");
 const { from, merge } = require('rxjs');
 const { take } = require('rxjs/operators');
 const path = require('path');
 var rimraf = require("rimraf");
-
 let browser = null;
 let page = null;
 let counter = { fails: 0, success: 0 }
@@ -207,6 +207,7 @@ function generateCustomMessage(contact, messagePrototype) {
 async function end() {
     await browser.close();
     console.log(`Result: ${counter.success} sent, ${counter.fails} failed`);
+    process.exit();
 }
 
 module.exports = {

@@ -2,10 +2,10 @@ const wbm = require('./src/index');
 var mysql      = require('mysql');
 
 var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'root',	
-    database : 'test_blast',
+    host     : process.env.DB_HOST,
+    user     : process.env.DB_USER,
+    password : process.env.DB_PASSWORD,	
+    database : process.env.DB_NAME,
   });
   
   let output;
@@ -43,18 +43,11 @@ var connection = mysql.createConnection({
         //     { phone: '6285156474847', name: 'dharma', age: 20 },
             
         // ];
-        const message = 'Hi kak {{phone}}, apakah kakak tertarik untuk deposit?';
+        const message = 'Hi kak {{name}}, apakah kakak tertarik untuk deposit?';
 
         
         await wbm.send(output, message);
         await wbm.end();
     }).catch(err => console.log(err));
 
-    // await wbm.start({showBrowser: true}).then(async () => {
-    //     await wbm.sendTo({ phone: '62895413548932', name: 'Refly' }, 'Hey {{name}}');
-    //     // send: Hey Bruno
-    //     await wbm.sendTo('6285156474847', 'Hey Dharma');
-    //     // send: Hey man
-    //     await wbm.end();
-    // });
 })();
